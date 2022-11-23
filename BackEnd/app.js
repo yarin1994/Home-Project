@@ -11,7 +11,7 @@ const PASS = process.env.PASS
 
 // DB Connection
 mongoose.connect(`mongodb+srv://yarin:${PASS}@node-rest-shop.lteykdr.mongodb.net/?retryWrites=true&w=majority`)
-
+mongoose.Promise = global.Promise;
 // MiddleWare
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
