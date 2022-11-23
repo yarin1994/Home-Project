@@ -9,8 +9,10 @@ const productRoutes = require("./api/routes/products");
 const ordersRoutes = require("./api/routes/orders");
 const PASS = process.env.PASS
 
+// DB Connection
 mongoose.connect(`mongodb+srv://yarin:${PASS}@node-rest-shop.lteykdr.mongodb.net/?retryWrites=true&w=majority`)
 
+// MiddleWare
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -25,6 +27,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// Routes
 app.use("/products", productRoutes);
 app.use("/orders", ordersRoutes);
 
