@@ -117,10 +117,8 @@ router.put("/:productId", (req, res, next) => {
         result: result,
         _id: id,
         request: {
-          request: {
-            type: "GET",
-            url: "http://localhost:3000/products/" + id,
-          },
+          type: "GET",
+          url: "http://localhost:3000/products/" + id,
         },
       });
     })
@@ -141,11 +139,10 @@ router.delete("/:productId", (req, res, next) => {
       res.status(200).json({
         result: result,
         _id: id,
+
         request: {
-          request: {
-            type: "GET",
-            url: "http://localhost:3000/products/" + id,
-          },
+          type: "DELETE",
+          url: "http://localhost:3000/products/" + id,
         },
       });
     })
