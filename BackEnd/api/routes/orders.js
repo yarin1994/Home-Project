@@ -107,6 +107,11 @@ router.delete("/:orderId", (req, res, next) => {
   Order.remove({ _id: id })
     .exec()
     .then((result) => {
+      if (!result) {
+          res.status(404).json({
+              message: "Order not found!"
+          })
+      }
       res.status(200).json({
         result: result,
         _id: id,
@@ -115,9 +120,6 @@ router.delete("/:orderId", (req, res, next) => {
           url: "http://localhost:3000/orders/" + id,
         },
       });
-    })
-    .catch((err) => {
-      error: err;
     });
 });
 
