@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const check_auth = require('../middleware/check-auth');
 
 const Product = require("../models/product");
 
@@ -36,7 +37,7 @@ router.get("/", (req, res, next) => {
 
 // Create new Product
 // Method: POST
-router.post("/", (req, res, next) => {
+router.post("/", check_auth, (req, res, next) => {
   // creating a new product object before saving it to DB
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
@@ -47,7 +48,7 @@ router.post("/", (req, res, next) => {
   product
     .save()
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       res.status(200).json({
         message: "Handling POST requests to /products",
         createdProduct: {
@@ -62,7 +63,7 @@ router.post("/", (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log('error is', err);
       res.status(500).json({ error: err });
     });
 });
@@ -75,7 +76,7 @@ router.get("/:productId", async (req, res, next) => {
   await Product.findById(id)
     .exec()
     .then((doc) => {
-      console.log("From DB", doc);
+      // console.log("From DB", doc);
       if (doc) {
         res.status(200).json({
           name: doc.name,
@@ -93,14 +94,14 @@ router.get("/:productId", async (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
 
 // Update Product by Id
 // Method: PUT
-router.put("/:productId", (req, res, next) => {
+router.put("/:productId", check_auth,(req, res, next) => {
   //   Extracting product id from params;
   const id = req.params.productId;
   const updateOps = {};
@@ -112,7 +113,7 @@ router.put("/:productId", (req, res, next) => {
   Product.updateOne({ _id: id }, { $set: updateOps })
     .exec()
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       res.status(200).json({
         result: result,
         _id: id,
@@ -123,14 +124,14 @@ router.put("/:productId", (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: err });
     });
 });
 
 // Delete product by Id
 // Method: DELETE
-router.delete("/:productId", (req, res, next) => {
+router.delete("/:productId", check_auth,(req, res, next) => {
   //   Extracting product id from params;
   const id = req.params.productId;
   Product.remove({ _id: id })

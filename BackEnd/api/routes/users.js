@@ -108,14 +108,14 @@ router.post("/login", (req, res, next) => {
               email: user[0].email,
               userId: user[0]._id,
             },
-            `${process.env.JWT_TOKEN}`,
+            `${process.env.JWT_KEY}`,
             {
               expiresIn: "1h",
             }
-          );
+          ); 
           return res.status(200).json({
             message: "Auth Successfull",
-            token: token
+            token: token,
           });
         }
         return res.status(401).json({
@@ -124,7 +124,7 @@ router.post("/login", (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      //   console.log(err);
       res.status(500).json({
         error: err,
       });
