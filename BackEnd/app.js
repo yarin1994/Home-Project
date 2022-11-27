@@ -7,7 +7,9 @@ const mongoose = require('mongoose');
 
 const productRoutes = require("./api/routes/products");
 const ordersRoutes = require("./api/routes/orders");
-const PASS = process.env.PASS
+const userRoutes = require("./api/routes/users");
+
+const PASS = process.env.PASS 
 
 // DB Connection
 mongoose.connect(`mongodb+srv://yarin:${PASS}@node-rest-shop.lteykdr.mongodb.net/?retryWrites=true&w=majority`)
@@ -30,6 +32,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/products", productRoutes);
 app.use("/orders", ordersRoutes);
+app.use("/user", userRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not Found");
