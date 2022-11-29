@@ -17,7 +17,7 @@ exports.products_get_all = (req, res, next) => {
             _id: doc._id,
             request: {
               type: "GET",
-              url: "http://localhost:3000/products/" + doc._id,
+              url: "http://localhost:5001/products/" + doc._id,
             },
           };
         }),
@@ -49,7 +49,7 @@ exports.products_create_product = (req, res, next) => {
           _id: result._id,
           request: {
             type: "POST",
-            url: "http://localhost:3000/products/" + result._id,
+            url: "http://localhost:5001/products/" + result._id,
           },
         },
       });
@@ -74,7 +74,7 @@ exports.products_get_by_id = async (req, res, next) => {
           _id: doc._id,
           request: {
             type: "GET",
-            url: "http://localhost:3000/products/" + doc._id,
+            url: "http://localhost:5001/products/" + doc._id,
           },
         });
       } else {
@@ -107,7 +107,7 @@ exports.products_edit = (req, res, next) => {
         _id: id,
         request: {
           type: "GET",
-          url: "http://localhost:3000/products/" + id,
+          url: "http://localhost:5001/products/" + id,
         },
       });
     })
@@ -129,7 +129,7 @@ exports.products_delete = (req, res, next) => {
   
           request: {
             type: "DELETE",
-            url: "http://localhost:3000/products/" + id,
+            url: "http://localhost:5001/products/" + id,
           },
         });
       })

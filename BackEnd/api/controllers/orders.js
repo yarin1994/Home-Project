@@ -16,7 +16,7 @@ exports.orders_getAll = (req, res, next) => {
             product: doc.product,
             request: {
               type: "GET",
-              url: "http://localhost:3000/orders/" + doc._id,
+              url: "http://localhost:5001/orders/" + doc._id,
             },
           };
         }),
@@ -81,7 +81,7 @@ exports.orders_edit_order = (req, res, next) => {
         _id: id,
         request: {
           type: "PUT",
-          url: "http://localhost:3000/orders/" + id,
+          url: "http://localhost:5001/orders/" + id,
         },
       });
     })
@@ -107,7 +107,7 @@ exports.orders_delete_order = (req, res, next) => {
         _id: id,
         request: {
           type: "DELETE",
-          url: "http://localhost:3000/orders/" + id,
+          url: "http://localhost:5001/orders/" + id,
         },
       });
     });

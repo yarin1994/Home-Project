@@ -18,7 +18,7 @@ exports.users_get_all = (req, res, next) => {
             password: doc.password,
             request: {
               type: "GET",
-              url: "http://localhost:3000/users/" + doc._id,
+              url: "http://localhost:5001/users/" + doc._id,
             },
           };
         }),
@@ -62,7 +62,7 @@ exports.users_add_new_user = (req, res, next) => {
                     email: result.email,
                     request: {
                       type: "POST",
-                      url: "http://localhost:3000/products/" + result._id,
+                      url: "http://localhost:5001/products/" + result._id,
                     },
                   },
                 });
@@ -133,7 +133,7 @@ exports.users_delete = (req, res, next) => {
           message: "User deleted",
           request: {
             type: "DELETE",
-            url: "http://localhost:3000/user/" + id,
+            url: "http://localhost:5001/user/" + id,
           },
         });
       })
