@@ -6,7 +6,7 @@ require("dotenv").config();
 
 exports.users_get_all = (req, res, next) => {
   User.find()
-    .select("_id email password")
+    .select("_id firstName lastName email password")
     .exec()
     .then((docs) => {
       res.status(200).json({
@@ -14,6 +14,8 @@ exports.users_get_all = (req, res, next) => {
         users: docs.map((doc) => {
           return {
             _id: doc._id,
+            firstName: doc.firstName,
+            lastName: doc.lastName,
             email: doc.email,
             password: doc.password,
             request: {
@@ -30,6 +32,22 @@ exports.users_get_all = (req, res, next) => {
       });
     });
 };
+
+// const loadUser = async () => {
+//   // todo = load token into global headers
+
+//   try {
+//     const res = await axios.get('/api/auth');
+
+//     dispatchEvent({
+//       payload: res.data
+//     });
+//   }catch (err) {
+//     res.status(500).json({
+//       error: err,
+//     });
+//   }
+// }
 
 exports.users_add_new_user = (req, res, next) => {
   User.find({ email: req.body.email })
@@ -49,6 +67,8 @@ exports.users_add_new_user = (req, res, next) => {
           } else {
             const user = new User({
               _id: new mongoose.Types.ObjectId(),
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
               email: req.body.email,
               password: hash,
             });
@@ -59,6 +79,8 @@ exports.users_add_new_user = (req, res, next) => {
                   message: "User added successfully",
                   createdUser: {
                     _id: result._id,
+                    firstName: result.firstName,
+                    lastName: result.lastName,
                     email: result.email,
                     request: {
                       type: "POST",
@@ -125,21 +147,21 @@ exports.users_login = (req, res, next) => {
 };
 
 exports.users_delete = (req, res, next) => {
-    const id = req.params.userId;
-    User.remove({ _id: id })
-      .exec()
-      .then((result) => {
-        res.status(200).json({
-          message: "User deleted",
-          request: {
-            type: "DELETE",
-            url: "http://localhost:5001/user/" + id,
-          },
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: err,
-        });
+  const id = req.params.userId;
+  User.remove({ _id: id })
+    .exec()
+    .then((result) => {
+      res.status(200).json({
+        message: "User deleted",
+        request: {
+          type: "DELETE",
+          url: "http://localhost:5001/user/" + id,
+        },
       });
-  }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+      });
+    });
+};
