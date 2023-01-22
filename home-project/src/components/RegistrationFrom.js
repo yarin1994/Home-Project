@@ -39,7 +39,6 @@ const RegistrationFrom = () => {
   });
   
   const handleSubmit = (e) => {
-    // e.preventdefault();
     axios
       .post(BASE_URL, {
         firstName: values.firstName,
