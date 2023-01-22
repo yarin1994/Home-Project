@@ -22,8 +22,7 @@ const NavBar = ({ username }) => {
             sx={{ mr: 2 }}
           ></IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            My Project
-            {username}
+            My Project {username}
           </Typography>
           <Button
             onClick={() => {

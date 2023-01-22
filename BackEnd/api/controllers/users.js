@@ -50,6 +50,8 @@ exports.users_add_new_user = (req, res, next) => {
             const user = new User({
               _id: new mongoose.Types.ObjectId(),
               email: req.body.email,
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
               password: hash,
             });
             user

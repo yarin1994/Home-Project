@@ -11,11 +11,9 @@ import ProductsPage from "./pages/ProductsPage";
 import NavBar from "./components/Navbar";
 
 const App = () => {
-  const [username, setUsername] = useState("not logged in");
-  console.log(username)
   return (
     <Router>
-      <Navbar username={username ? username : "not logged in"} />
+      <NavBar username={localStorage.getItem('user_name') ? localStorage.getItem('user_name') : "not logged in"} />
       {/* <NavBar /> */}
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
