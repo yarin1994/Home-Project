@@ -3,7 +3,6 @@ import React from "react";
 
 const HomePage = () => {
   const isAuthenticated = localStorage.getItem('isAuthenticated');
-  console.log(isAuthenticated);
   return (
     <>
       <h1> HomePage </h1>

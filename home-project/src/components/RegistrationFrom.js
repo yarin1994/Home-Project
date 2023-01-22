@@ -51,10 +51,6 @@ const RegistrationFrom = () => {
         if(data.status === 200){
           navigate('/main');
         }
-        // if(data.data.message === "Auth Successfull"){
-        //     localStorage.setItem('token', data.data.token)
-        //     navigate('/main')
-        // } 
       });
   };
 
@@ -66,11 +62,6 @@ const RegistrationFrom = () => {
     });
     console.log(`name, value`, name, value);
   };
-
-  const handleSignedUp = (e) => {
-    e.preventDefault();
-    // navigate('/login');
-  }
 
   return (
     <>
@@ -129,9 +120,7 @@ const RegistrationFrom = () => {
 
       <Button
         type="button"
-        // onClick={navigate('/main')}
         onClick={() => navigate('/login')}
-        //   className={classes.loginBtn}
         variant="outlined"
       >
         Already Signed Up?

@@ -30,6 +30,8 @@ const NavBar = () => {
       if (response.data.message === 'Logout successful') {
           localStorage.removeItem('token');
           localStorage.removeItem('user_name')
+          localStorage.setItem("isAuthenticated", false);
+
           navigate('/');
       }
   } catch (error) {
