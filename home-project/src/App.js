@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./pages/ProtectedRoutes";
@@ -13,16 +13,13 @@ import NavBar from "./components/Navbar";
 const App = () => {
   return (
     <Router>
-      <NavBar username={localStorage.getItem('user_name') ? localStorage.getItem('user_name') : "not logged in"} />
-      {/* <NavBar /> */}
+      <NavBar />
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/login" element={<Login />} />
         <Route path="/main" element={<HomePage />} />
         <Route path="/signup" element={<RegistrationFrom />} />
         <Route path="/products" element={<ProductsPage />} />
-
-        {/* <ProtecstedRoute path="/main" element={<HomePage />} /> */}
       </Routes>
     </Router>
   );

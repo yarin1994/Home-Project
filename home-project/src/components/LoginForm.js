@@ -46,6 +46,7 @@ const LoginForm = () => {
         // console.log("data is", data.data.user[0].firstName);
         setUsername(data.data.user[0].firstName);
         if (data.data.message === "Auth Successfull") {
+          console.log(data.data.user)
           localStorage.setItem("user_name", data.data.user[0].firstName)
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("isAuthenticated", true);

@@ -7,18 +7,25 @@ const useStyles = makeStyles(() => ({
     width: "200px",
     height: "100px",
     marginTop: "20px",
-    backgroundColor: "red"
+    backgroundColor: "red",
   },
 }));
 
 const ProductsPage = () => {
   const classes = useStyles();
+  const token = localStorage.getItem("token");
   const [data, setData] = useState([]);
+
   useEffect(() => {
     fetchData();
   }, []);
+
   const fetchData = async () => {
-    const response = await axios.get(BASE_URL);
+    const response = await axios.get(BASE_URL, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
     setData(response.data.products);
   };
 

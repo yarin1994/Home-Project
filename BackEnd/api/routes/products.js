@@ -9,7 +9,7 @@ const productsController = require('../controllers/products');
 
 // Get All Products
 // Method: GET
-router.get("/", productsController.products_get_all);
+router.get("/", check_auth, productsController.products_get_all);
 
 // Create new Product
 // Method: POST
