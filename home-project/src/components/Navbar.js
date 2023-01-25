@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,35 +9,32 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const BASE_URL = "http://localhost:5001/user/logout";
 
-
 const NavBar = () => {
   const [userName, setUserName] = useState("");
+  const [logged, setLogged] = useState(localStorage.getItem("isAuthenticated"));
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     setUserName(localStorage.getItem("user_name"));
-  }, [localStorage.getItem('user_name')])
-
+  }, [localStorage.getItem("user_name")]);
 
   const handleLogout = async () => {
     try {
       const response = await axios.post(BASE_URL, null, {
-          headers: {
-              Authorization: `Bearer ${token}`
-          }
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      if (response.data.message === 'Logout successful') {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user_name')
-          localStorage.setItem("isAuthenticated", false);
-
-          navigate('/');
+      if (response.data.message === "Logout successful") {
+        localStorage.clear();
+        setLogged(localStorage.getItem("isAuthenticated"));
+        navigate("/");
       }
-  } catch (error) {
+    } catch (error) {
       console.log(error);
-  }
-};
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -55,9 +52,16 @@ const NavBar = () => {
           </Typography>
           {localStorage.getItem("token") ? (
             <Button
-              onClick={handleLogout}
+              onClick={() => {
+                navigate("/products");
+              }}
               color="inherit"
             >
+              Products
+            </Button>
+          ) : null}
+          {localStorage.getItem("token") ? (
+            <Button onClick={handleLogout} color="inherit">
               Logout
             </Button>
           ) : (

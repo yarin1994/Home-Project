@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core";
+import ProductCard from "../components/ProductCard";
+
 const BASE_URL = "http://localhost:5001/products";
 const useStyles = makeStyles(() => ({
   productCard: {
@@ -32,18 +34,17 @@ const ProductsPage = () => {
   return (
     <>
       <h2>Products Page</h2>
-      {data.length ? (
-        data.map((item) => (
-          <div key={item._id}>
-            <div className={classes.productCard}>
-              <h3>Name: {item.name}</h3>
-              <h3>Price: {item.price}</h3>
+      <div className="card-container">
+        {data.length ? (
+          data.map((item) => (
+            <div key={item._id}>
+              <ProductCard name={item.name} price={item.price} img={item.img} />
             </div>
-          </div>
-        ))
-      ) : (
-        <h2>loading</h2>
-      )}
+          ))
+        ) : (
+          <h2>loading</h2>
+        )}
+      </div>
     </>
   );
 };

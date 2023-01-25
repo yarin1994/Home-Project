@@ -5,7 +5,7 @@ exports.products_get_all = (req, res, next) => {
   // Find all proudtcs in DB
   Product.find()
     // select() lets us choose which values we want to return
-    .select("name price _id")
+    .select("name price _id img")
     .then((docs) => {
       // Returning a better response with more data.
       const response = {
@@ -14,6 +14,7 @@ exports.products_get_all = (req, res, next) => {
           return {
             name: doc.name,
             price: doc.price,
+            img: doc.img,
             _id: doc._id,
             request: {
               type: "GET",
@@ -34,6 +35,7 @@ exports.products_create_product = (req, res, next) => {
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
+    img: req.body.img,
     price: req.body.price,
   });
 
@@ -45,6 +47,7 @@ exports.products_create_product = (req, res, next) => {
         message: "Handling POST requests to /products",
         createdProduct: {
           name: result.name,
+          img: result.img,
           price: result.price,
           _id: result._id,
           request: {
@@ -71,6 +74,7 @@ exports.products_get_by_id = async (req, res, next) => {
         res.status(200).json({
           name: doc.name,
           price: doc.price,
+          img: doc.img,
           _id: doc._id,
           request: {
             type: "GET",
@@ -112,28 +116,27 @@ exports.products_edit = (req, res, next) => {
       });
     })
     .catch((err) => {
-      // console.log(err);
       res.status(500).json({ error: err });
     });
 };
 
 exports.products_delete = (req, res, next) => {
-    //   Extracting product id from params;
-    const id = req.params.productId;
-    Product.remove({ _id: id })
-      .exec()
-      .then((result) => {
-        res.status(200).json({
-          result: result,
-          _id: id,
-  
-          request: {
-            type: "DELETE",
-            url: "http://localhost:5001/products/" + id,
-          },
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err });
+  //   Extracting product id from params;
+  const id = req.params.productId;
+  Product.remove({ _id: id })
+    .exec()
+    .then((result) => {
+      res.status(200).json({
+        result: result,
+        _id: id,
+
+        request: {
+          type: "DELETE",
+          url: "http://localhost:5001/products/" + id,
+        },
       });
-  }
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+};
