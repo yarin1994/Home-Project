@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import ProductCard from "../components/ProductCard";
 
-const BASE_URL = "http://localhost:5001/products";
+const BASE_URL = "http://localhost:5001";
 const useStyles = makeStyles(() => ({
   productCard: {
     width: "200px",
@@ -23,7 +23,7 @@ const ProductsPage = () => {
   }, []);
 
   const fetchData = async () => {
-    const response = await axios.get(BASE_URL, {
+    const response = await axios.get(`${BASE_URL}/products`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -34,11 +34,17 @@ const ProductsPage = () => {
   return (
     <>
       <h2>Products Page</h2>
+
       <div className="card-container">
         {data.length ? (
           data.map((item) => (
             <div key={item._id}>
-              <ProductCard name={item.name} price={item.price} img={item.img} />
+              <ProductCard
+                name={item.name}
+                price={item.price}
+                img={item.img}
+                id={item._id}
+              />
             </div>
           ))
         ) : (

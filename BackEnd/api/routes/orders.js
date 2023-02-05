@@ -11,11 +11,11 @@ const order = require("../models/order");
 
 // Get All Orders
 // Method: GET
-router.get("/", check_auth,orderController.orders_getAll);
+router.get("/:userId", check_auth,orderController.orders_getAll);
 
-// Add new Order
-// Method: POST
-router.post("/", check_auth, orderController.orders_add_new);
+// Get order by ID
+// Method: GET
+router.post("/:userId", check_auth, orderController.add_new_item)
 
 // Edit Order
 // Method: PUT

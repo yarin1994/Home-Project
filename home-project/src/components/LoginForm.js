@@ -48,6 +48,7 @@ const LoginForm = () => {
         if (data.data.message === "Auth Successfull") {
           console.log(data.data.user)
           localStorage.setItem("user_name", data.data.user[0].firstName)
+          localStorage.setItem("user_id", data.data.user[0]._id)
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("isAuthenticated", true);
           navigate("/main");

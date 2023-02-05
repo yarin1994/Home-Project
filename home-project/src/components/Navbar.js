@@ -47,6 +47,7 @@ const NavBar = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           ></IconButton>
+          <Button onClick={() => {navigate('/orders')}} color="inherit">Cart</Button>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             My Project {userName}
           </Typography>
