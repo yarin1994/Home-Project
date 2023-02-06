@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ProductList from "../components/OrderCard";
 import axios from "axios";
 const BASE_URL = "http://localhost:5001";
 
@@ -22,16 +23,19 @@ const OrdersPage = () => {
   };
   return (
     <>
+      <div className="ProductList__item__headline">
+        <div className="ProductList__item__name">Name</div>
+        <div className="ProductList__item__quantity">Quantity</div>
+        <div className="ProductList__item__price">Price</div>
+      </div>
       {data.length ? (
         data.map((item) => (
           <div key={item._id}>
-            <div>
-              <h3>{item._id}</h3>
-              <h3>{item.product_name}</h3>
-              <h3>{item.quantity}</h3>
-            </div>
-            {/* Add a order card component */}
-            {/* and send the orders data to display it */}
+            <ProductList
+              product_name={item.product_name}
+              quantity={item.quantity}
+              price={item.price}
+            />
           </div>
         ))
       ) : (

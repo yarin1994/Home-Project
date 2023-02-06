@@ -5,20 +5,19 @@ const mongoose = require("mongoose");
 
 exports.orders_getAll = (req, res, next) => {
   const user_id = req.params.userId;
-  console.log(`user_idddddd`, user_id)
   Order.find({user_id: user_id})
-    .select("_id quantity product product_name")
+    .select("_id quantity product product_name price")
     .exec()
     .then((docs) => {
-      // console.log("docs", docs)
       res.status(200).json({
         count: docs.length,
         orders: docs.map((doc) => {
+          console.log("docccc", doc )
           return {
             _id: doc._id,
             quantity: doc.quantity,
-            product: doc.product,
             product_name: doc.product_name,
+            price: doc.price,
             request: {
               type: "GET",
               url: "http://localhost:5001/orders/" + doc._id,
@@ -55,6 +54,7 @@ exports.add_new_item = (req, res, next) => {
               .exec()
               .then(() => {
                 res.status(200).json({
+                  order: order,
                   message: "Quantity has benn updated successfully",
                 });
               });
@@ -64,6 +64,7 @@ exports.add_new_item = (req, res, next) => {
               user_id: user_id,
               product: req.body.product,
               product_name: req.body.product_name,
+              price: req.body.price
             });
             return cart
               .save()
@@ -75,6 +76,7 @@ exports.add_new_item = (req, res, next) => {
                   product: result.product,
                   product_name: result.product_name,
                   quantity: result.quantity,
+                  price: result.price
                 });
               })
               .catch((err) => {

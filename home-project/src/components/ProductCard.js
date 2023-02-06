@@ -9,12 +9,13 @@ const ProductCard = (item) => {
   const user_id = localStorage.getItem('user_id');
 
 
-  const productOnClick = (id, name) => {
+  const productOnClick = (id, name, price) => {
     axios.post(
       `${BASE_URL}/orders/` + user_id,
       {
         product: id,
-        product_name: name
+        product_name: name,
+        price: price
       },
       {
         headers: {
@@ -24,15 +25,13 @@ const ProductCard = (item) => {
     );
   }
 
-
-  console.log(`item.img`, item.img);
   return (
     <>
       <div className="product-card">
         <img src={item.img} alt="Product Name" />
         <h3>Name: {item.name}</h3>
         <h3 className="price">Price: {item.price}</h3>
-        <Button onClick={() => {productOnClick(item.id, item.name)}} class="product-card button">Add to Cart</Button>
+        <Button onClick={() => {productOnClick(item.id, item.name, item.price)}} className="product-card button">Add to Cart</Button>
       </div>
     </>
   );

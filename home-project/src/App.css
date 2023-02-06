@@ -124,3 +124,51 @@
 .product-card button:hover {
   background-color: #3e8e41;
 }
+
+/* Order list */
+.ProductList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ProductButton {
+  /* display: absolute; */
+  flex-direction: row;
+  /* width: 97%; */
+  margin-top: 16px;
+  border-bottom: 1px solid lightgray;
+}
+
+.ProductList__item {
+  display: flex;
+  flex-direction: row;
+  width: 97%;
+  padding: 16px;
+  border-bottom: 1px solid lightgray;
+}
+
+.ProductList__item__headline {
+  display: flex;
+  opacity: 50%;
+  flex-direction: row;
+  background-color: gray;
+  width: 97%;
+  padding: 16px;
+  border-bottom: 1px solid lightgray;
+}
+
+.ProductList__item__name {
+  flex: 2;
+  font-weight: bold;
+}
+
+.ProductList__item__quantity {
+  flex: 1;
+  text-align: center;
+}
+
+.ProductList__item__price {
+  flex: 1;
+  text-align: right;
+}
