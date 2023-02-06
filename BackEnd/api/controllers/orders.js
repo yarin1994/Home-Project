@@ -1,19 +1,23 @@
 const Order = require("../models/order");
 const Product = require("../models/product");
+const User = require("../models/user");
 const mongoose = require("mongoose");
 
 exports.orders_getAll = (req, res, next) => {
-  Order.find()
-    .select("_id quantity product")
+  const user_id = req.params.userId;
+  Order.find({user_id: user_id})
+    .select("_id quantity product product_name price")
     .exec()
     .then((docs) => {
       res.status(200).json({
         count: docs.length,
         orders: docs.map((doc) => {
+          console.log("docccc", doc )
           return {
             _id: doc._id,
             quantity: doc.quantity,
-            product: doc.product,
+            product_name: doc.product_name,
+            price: doc.price,
             request: {
               type: "GET",
               url: "http://localhost:5001/orders/" + doc._id,
@@ -29,41 +33,60 @@ exports.orders_getAll = (req, res, next) => {
     });
 };
 
-exports.orders_add_new = (req, res, next) => {
-  Product.findById(req.body.productId)
+exports.add_new_item = (req, res, next) => {
+  const user_id = req.params.userId;
+  User.findById({ _id: user_id })
     .exec()
-    .then((product) => {
-      if (!product) {
+    .then((user) => {
+      if (!user) {
         return res.status(404).json({
-          message: "Product not found",
+          message: "User not exist",
         });
       }
-      const order = new Order({
-        _id: new mongoose.Types.ObjectId(),
-        quantity: req.body.quantity,
-        product: req.body.productId,
-      });
-      return order
-        .save()
-        .then((result) => {
-          res.status(201).json({
-            _id: result._id,
-            quantity: result.quantity,
-            product: result.product,
-          });
-        })
-        .catch((err) => {
-          res.status(500).json({ error: err });
+      Order.findOne({ user_id: user_id, product: req.body.product })
+        .exec()
+        .then((order) => {
+          if (order) {
+            Order.updateOne(
+              { _id: order._id },
+              { $inc: { quantity: 1 } }
+            )
+              .exec()
+              .then(() => {
+                res.status(200).json({
+                  order: order,
+                  message: "Quantity has benn updated successfully",
+                });
+              });
+          } else {
+            const cart = new Order({
+              _id: new mongoose.mongoose.Types.ObjectId(),
+              user_id: user_id,
+              product: req.body.product,
+              product_name: req.body.product_name,
+              price: req.body.price
+            });
+            return cart
+              .save()
+              .then((result) => {
+                console.log("resultiiiii", result);
+                res.status(200).json({
+                  _id: result._id,
+                  user_id: result.user_id,
+                  product: result.product,
+                  product_name: result.product_name,
+                  quantity: result.quantity,
+                  price: result.price
+                });
+              })
+              .catch((err) => {
+                res.status(505).json({ error: err });
+              });
+          }
         });
-    })
-    .catch((err) => {
-      console.log(`err`, err);
-      res.status(500).json({
-        message: "Product Id not exist",
-        error: err,
-      });
     });
 };
+
 
 exports.orders_edit_order = (req, res, next) => {
   const id = req.params.orderId;

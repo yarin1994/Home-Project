@@ -9,8 +9,15 @@ import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
 import ProductsPage from "./pages/ProductsPage";
 import NavBar from "./components/Navbar";
+import OrdersPage from "./pages/OrdersPage";
 
 const App = () => {
+  
+  useEffect(() => {
+    localStorage.clear()
+  }, []);
+
+
   return (
     <Router>
       <NavBar />
@@ -20,6 +27,7 @@ const App = () => {
         <Route path="/main" element={<HomePage />} />
         <Route path="/signup" element={<RegistrationFrom />} />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/orders" element={<OrdersPage />} />
       </Routes>
     </Router>
   );
