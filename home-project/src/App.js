@@ -13,11 +13,6 @@ import OrdersPage from "./pages/OrdersPage";
 
 const App = () => {
   
-  useEffect(() => {
-    localStorage.clear()
-  }, []);
-
-
   return (
     <Router>
       <NavBar />

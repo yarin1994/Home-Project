@@ -12,11 +12,12 @@ exports.orders_getAll = (req, res, next) => {
       res.status(200).json({
         count: docs.length,
         orders: docs.map((doc) => {
-          console.log("docccc", doc )
+          console.log(`docsss`, doc)
           return {
             _id: doc._id,
             quantity: doc.quantity,
             product_name: doc.product_name,
+            product_id: doc.product,
             price: doc.price,
             request: {
               type: "GET",
@@ -90,13 +91,8 @@ exports.add_new_item = (req, res, next) => {
 
 exports.orders_edit_order = (req, res, next) => {
   const id = req.params.orderId;
-  const updateOps = {};
-
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.value;
-  }
-
-  Order.updateOne({ _id: id }, { $set: updateOps })
+  
+  Order.updateOne({ _id: id }, { $set: req.body })
     .exec()
     .then((result) => {
       res.status(200).json({

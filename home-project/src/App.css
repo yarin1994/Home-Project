@@ -133,11 +133,8 @@
 }
 
 .ProductButton {
-  /* display: absolute; */
+  margin-right: 7px;
   flex-direction: row;
-  /* width: 97%; */
-  margin-top: 16px;
-  border-bottom: 1px solid lightgray;
 }
 
 .ProductList__item {
@@ -147,13 +144,21 @@
   padding: 16px;
   border-bottom: 1px solid lightgray;
 }
+.ProductList__item:hover{
+  display: flex;
+  flex-direction: row;
+  width: 97%;
+  padding: 16px;
+  border-bottom: 1px solid lightgray;
+  background-color: rgb(245, 248, 250);
+}
 
 .ProductList__item__headline {
   display: flex;
   opacity: 50%;
   flex-direction: row;
   background-color: gray;
-  width: 97%;
+  width: 97.8%;
   padding: 16px;
   border-bottom: 1px solid lightgray;
 }
